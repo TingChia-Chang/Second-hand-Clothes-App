@@ -1,0 +1,360 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --main-color: #8b1f41;
+    --main-sunset: #ED8B00
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+div#title-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--main-color);
+    border: grey;
+}
+
+div#logo-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div#logo-box > img {
+    width: 80px;
+    height: auto;
+    padding: 16px 8px;
+}
+
+div#login-box {
+    margin: 0 5px;
+}
+
+img#notification {
+    display: none;
+    float: right;
+}
+
+.search-form {
+    display: none;
+    float: right;
+}
+
+div#login-box > p {
+    display: none;
+    float: right;
+}
+
+img#user {
+    display: none;
+    float: right;
+}
+
+
+#login-box img{
+    float: right;
+    width: 25px;
+    height: 25px;
+    padding: 0 4px;
+}
+
+ul#primary-nav {
+    padding: 0;
+    list-style-type: none;
+    background-color: var(--main-sunset);
+}
+
+ul#primary-nav li{
+    width: 25%;
+    height: 32px;
+}
+
+ul#primary-nav li a {
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    margin: 5px;
+    color: #fff;
+}
+
+ul#primary-nav li a.selected{
+    background-color: #000;
+}
+
+div#content {
+    margin: 8px 10px;
+    height: 550px;
+}
+
+form#form-box > div{
+    margin: 12px 20px;
+}
+
+div#content h3 {
+    text-align: center;
+}
+
+div#content > div {
+    margin: 20px 0;
+}
+
+.checkbox-box {
+    display: flex;
+    flex-direction: row;
+    margin: 8px 0;
+}
+
+.checkbox-item {
+    margin: 0 40px;
+}
+
+.name-price {
+    width: 100%;
+}
+
+.des-box {
+    width: 100%;
+    height: 100px;
+}
+
+div#submit-button {
+    display: flex;
+    justify-content: center;
+}
+
+div#submit-button > button{
+    width: 50px;
+    height: 30px;
+}
+
+div#subscribe-box {
+    padding: 8px 4px;
+    display: flex;
+    align-items: center;
+}
+
+div#create-box {
+    margin: 80px 0;
+}
+
+div#create-box  h3{
+    font-size: 2em;
+}
+
+div#warn-box p {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+div#warn-box {
+    margin: 30px 0;
+}
+
+div#footer {
+    background-color: var(--main-color);
+    height: 80px;
+}
+
+div#subscribe-box > img {
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin: 0 4px;
+}
+
+div#subscribe-box > input {
+    float: left;
+    margin: 0 4px;
+}
+
+div#subscribe-box > button {
+    float: left;
+    margin: 0 4px;
+    width: 50px;
+    font-size: 0.25em;
+}
+
+p#footer-nav {
+    margin: 0px 6px;
+}
+
+p#footer-nav a {
+    text-decoration: none;
+    color: white;
+}
+
+
+
+@media screen and (min-width: 768px){
+    img#notification {
+        display: block;
+    }
+
+    .search-form {
+        display: block;
+    }
+
+    .search-input {
+        width: 100px;
+    }
+
+    .go-button {
+        width: 25px;
+    }
+
+    div#login-box > p {
+        display: inline;
+    }
+
+    img#search-image {
+        display: none;
+    }
+
+    img#bar {
+        display: none;
+    }
+
+    img#user {
+        display: block;
+    }
+
+    div#login-box {
+        width: 310px;
+    }
+
+    div#logo-box > img {
+        width: 120px;
+        height: auto;
+        padding: 16px 8px;
+    }
+
+    ul#primary-nav {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    form#form-box {
+        padding: 0 280px;
+    }
+
+    form#form-box > div{
+        margin: 40px 0;
+    }
+
+    .checkbox-box {
+        margin: 10px 0;
+    }
+
+    .checkbox-item {
+        margin: 0 80px;
+    }
+
+    .check-label {
+        font-size: 1em;
+    }
+
+    div#content h3 {
+        font-size: 2em;
+    }
+
+    .form-item {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .form-item > p {
+        font-size: 1.5em;
+        margin: 0 5px;
+    }
+
+    .form-item >label {
+        font-size: 1.5em;
+        margin: 0 10px;
+    }
+
+    .form-item > input {
+        width: 500px;
+    }
+
+    .form-item > button {
+        margin: 0 60px;
+    }
+
+    div#content {
+        height: 700px;
+    }
+
+    .name-price {
+        margin: 0 65px;
+    }
+
+    div#create-box {
+        margin: 80px 0;
+    }
+
+    div#create-box  h3{
+        font-size: 2em;
+    }
+
+    div#warn-box p {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    div#warn-box {
+        margin: 30px 0;
+    }
+
+    div#subscribe-box {
+        display: flex;
+        align-items: center;
+
+    }
+
+    div#footer {
+        height: 100px;
+        display: flex;
+        align-items: center;
+    }
+
+    div#subscribe-box > img {
+        width: 40px;
+        height: 40px;
+    }
+
+    div#subscribe-box > input {
+        height: 25px;
+        width: 300px;
+    }
+    div#subscribe-box  > button {
+        height: 30px;
+        width: auto;
+        padding: 0 8px;
+        font-size: 1rem;
+        background-color: var(--main-sunset);
+        color: white;
+        border:0
+    }
+
+    div#subscribe-box  > button:hover{ 
+        background-color: gray;
+        cursor: pointer;
+    }
+
+    p#footer-nav a {
+        
+        font-size: 1rem;
+        margin: 0 8px;
+    }
+
+    p#footer-nav a:hover{
+        color: var(--main-sunset);
+    }
+}

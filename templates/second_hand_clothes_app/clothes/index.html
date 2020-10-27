@@ -1,0 +1,99 @@
+{% extends "second_hand_clothes_app/base.html" %}
+{% load static %}
+{% block page-title %} Index Page {% endblock %}
+
+{% block login-box %}
+<img id="bar" src="{% static 'pictures/bar.svg' %}" alt="bar">
+
+{% if request.session.username %}
+<a href="{% url 'second_hand_clothes_app:log_out' %}"><img id="sign_out" src="{% static 'pictures/sign-out.svg' %}"
+        alt="signout"></a>
+{% endif %}
+
+<img id="search-image" src="{% static 'pictures/search.svg' %}" alt="search">
+<form class="search-form" action="{% url 'second_hand_clothes_app:clothes_search_result' %}" method="GET">
+    <input class="search-input" type="text" id="search" name="search-clothes" placeholder="Search clothes">
+    <input class="go-button" type="submit" name="search" value="Go">
+</form>
+<img id="notification" src="{% static 'pictures/notification.svg' %}" alt="notification">
+<img src="{% static 'pictures/cart.png' %}" alt="cart">
+
+{% if request.session.username %}
+<p>Hi, <a href="#">{{request.session.username}}</a></p>
+{% else %}
+<a href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">log In</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% if request.session.username %}
+<div class="container dashboard">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 dash-col">
+            <h1>Your Dashboard</h1>
+            {% for item in clothes %}
+            <div class="container py-2 item-container">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{% static item.picture %}" alt="item">
+                    </div>
+                    <div class="col-5">
+                        <h4>{{item.name}}</h4>
+                        <h4 class="item-price">${{item.price}}</h4>
+                    </div>
+                    <div class="col-3">
+                        <a href="{% url 'second_hand_clothes_app:clothes_edit' %}"><button
+                                class="btn btn-secondary">Edit</button></a>
+                        {% if request.session.role == "admin" %}
+                        <button class="btn btn-danger" id="delete" data-toggle="modal"
+                            data-target="#Modal">Delete</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% else %}
+<div id="idea-box">
+    <img src="{% static 'pictures/item1.png' %}" alt="item1">
+    <h1>Daily</h1>
+</div>
+<div id="idea-box2">
+    <img src="{% static 'pictures/item2.png' %}" alt="item2">
+    <h1>Save Earth</h1>
+</div>
+{% endif %}
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure to delete the item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancell
+                </button>
+                <button type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block css-box %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
+    integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/home.css' %}">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

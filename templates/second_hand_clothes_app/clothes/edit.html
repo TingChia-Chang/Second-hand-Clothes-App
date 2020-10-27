@@ -1,0 +1,85 @@
+{% extends "second_hand_clothes_app/base.html" %}
+{% load static %}
+{% block page-title %} edit Page {% endblock %}
+
+{% block login-box %}
+<img id="bar" src="{% static 'pictures/bar.svg' %}" alt="bar">
+{% if request.session.username %}
+<a href="{% url 'second_hand_clothes_app:log_out' %}"><img id="sign_out" src="{% static 'pictures/sign-out.svg' %}"
+        alt="signout"></a>
+{% endif %}
+<img id="search-image" src="{% static 'pictures/search.svg' %}" alt="search">
+<form class="search-form" action="{% url 'second_hand_clothes_app:clothes_search_result' %}" method="GET">
+    <input class="search-input" type="text" id="search" name="search-clothes" placeholder="Search clothes">
+    <input class="go-button" type="submit" name="search" value="Go">
+</form>
+<img id="notification" src="{% static 'pictures/notification.svg' %}" alt="notification">
+<img src="{% static 'pictures/cart.png' %}" alt="cart">
+{% if request.session.username %}
+<p>Hi, <a href="#">{{request.session.username}}</a></p>
+{% else %}
+<a href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">log In</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h3>Edit item</h3>
+<form id="form-box" enctype="multipart/form-data">
+    <div class="form-item" id="form-name">
+        <label for="name">Name :</label><br>
+        <input class="name-price" id="name" type="text" name="name">
+    </div><!-- #form-item -->
+    <div class="form-item" id="check-women">
+        <p>Group:
+        <p><br>
+        <div class="checkbox-box">
+            <div class="checkbox-item">
+                <input type="checkbox" id="women" name="women">
+                <label class="check-label" for="women"> Women</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="men" name="men">
+                <label id="check-label" for="men"> Men</label>
+            </div>
+        </div><!-- #checkbox-box -->
+    </div><!-- #form-item -->
+    <div class="form-item" id="check-top">
+        <p>Kind:
+        <p><br>
+        <div class="checkbox-box">
+            <div class="checkbox-item">
+                <input type="checkbox" id="top" name="top">
+                <label class="check-label" for="top">Top</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="bottom" name="bottom">
+                <label class="check-label" for="bottom"> Buttom</label>
+            </div>
+        </div><!-- #checkbox-box -->
+    </div><!-- #form-item -->
+    <div class="form-item" id="form-size">
+        <label for="size">Size :</label><br>
+        <input class="name-price" type="text" name="size" id="size"><br>
+    </div><!-- #form-item -->
+    <div class="form-item">
+        <label for="photo">Photo :</label>
+        <button class="upload" id="photo">Upload Photo</button>
+    </div><!-- #form-item -->
+    <div class="form-item" id="form-price">
+        <label for="price">Price :</label><br>
+        <input class="name-price" type="text" name="price" id="price">
+    </div><!-- #form-item -->
+    <div class="form-item" id="form-des">
+        <label for="description">Description :</label><br>
+        <input class="des-box" type="text" name="description" id="description"><br>
+    </div><!-- #form-item -->
+    <div id="submit-button">
+        <button id="submit">Save</button>
+    </div>
+</form>
+{% endblock %}
+
+
+{% block css-box %}
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/edit.css' %}">
+{% endblock %}

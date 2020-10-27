@@ -1,0 +1,69 @@
+{% extends "second_hand_clothes_app/base.html" %}
+{% load static %}
+{% block page-title %} Search Results Page {% endblock %}
+
+
+{% block login-box %}
+<img id="bar" src="{% static 'pictures/bar.svg' %}" alt="bar">
+{% if request.session.username %}
+<a href="{% url 'second_hand_clothes_app:log_out' %}"><img id="sign_out" src="{% static 'pictures/sign-out.svg' %}"
+        alt="signout"></a>
+{% endif %}
+<img id="search-image" src="{% static 'pictures/search.svg' %}" alt="search">
+<form class="search-form" action="{% url 'second_hand_clothes_app:clothes_search_result' %}" method="GET">
+    <input class="search-input" type="text" id="search" name="search-clothes" placeholder="Search clothes">
+    <input class="go-button" type="submit" name="search" value="Go">
+</form>
+<img id="notification" src="{% static 'pictures/notification.svg' %}" alt="notification">
+<img src="{% static 'pictures/cart.png' %}" alt="cart">
+{% if request.session.username %}
+<p>Hi, <a href="#">{{request.session.username}}</a></p>
+{% else %}
+<a href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">log In</a>
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="result-box">
+    <h3>3 Results</h3>
+    <!-- #result-box -->
+</div>
+
+<div id="item-list">
+    <div class="item-box">
+        <a href="detail.html">
+            <img src="{% static 'pictures/item4.png' %}" alt="item4">
+        </a>
+        <h4>Hokies Logo Hoodie</h4>
+        <p>Sold by: <a href="#">Iris Chang (10)</a></p>
+        <p class="item-price">$20</p>
+    </div><!-- #item -->
+
+    <div class="item-box">
+        <img src="{% static 'pictures/item1.png' %}" alt="item1">
+        <h4>VT Logo Hoodie</h4>
+        <p>Sold by: <a href="#">Tina (20)</a></p>
+        <p class="item-price">$20</p>
+    </div><!-- #item -->
+
+    <div class="item-box">
+        <img src="{% static 'pictures/item2.png' %}" alt="item2">
+        <h4>VT Logo Hoodie Red</h4>
+        <p>Sold by: <a href="#">Sharon (30)</a></p>
+        <p class="item-price">$20</p>
+    </div><!-- #item -->
+</div><!-- #item-list -->
+{% endblock %}
+
+
+{% block no-result %}
+<div class="no-result">
+    <h1 class="no-result-sentence">Sorry, no result.</h1>
+</div>
+{% endblock %}
+
+
+{% block css-box %}
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/search-result.css' %}">
+{% endblock %}

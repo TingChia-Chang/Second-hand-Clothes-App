@@ -1,0 +1,49 @@
+{% extends "second_hand_clothes_app/base.html" %}
+{% load static %}
+{% block page-title %} List Page {% endblock %}
+
+
+{% block login-box %}
+<img id="bar" src="{% static 'pictures/bar.svg' %}" alt="bar">
+{% if request.session.username %}
+<a href="{% url 'second_hand_clothes_app:log_out' %}"><img id="sign_out" src="{% static 'pictures/sign-out.svg' %}"
+        alt="signout"></a>
+{% endif %}
+<img id="search-image" src="{% static 'pictures/search.svg' %}" alt="search">
+<form class="search-form" action="{% url 'second_hand_clothes_app:clothes_search_result' %}" method="GET">
+    <input class="search-input" type="text" id="search" name="search-clothes" placeholder="Search clothes">
+    <input class="go-button" type="submit" name="search" value="Go">
+</form>
+<img id="notification" src="{% static 'pictures/notification.svg' %}" alt="notification">
+<img src="{% static 'pictures/cart.png' %}" alt="cart">
+{% if request.session.username %}
+<p>Hi, <a href="#">{{request.session.username}}</a></p>
+{% else %}
+<a href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">log In</a>
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<ul id="kind-nav">
+    <li><a href="#">Top</a></li>
+    <li><a href="#">Bottom</a></li>
+</ul><!-- #nkind-nav -->
+
+<div id="item-list">
+    {% for item in clothes %}
+    <div class="item-box">
+        <a href="{% url 'second_hand_clothes_app:clothes_detail' item.id %}">
+            <img src="{{ item.picture.url }}" alt="item">
+        </a>
+        <h4>{{item.name}}</h4>
+        <p>Sold by: <a href="#">{{item.seller}} ({{item.amount}})</a></p>
+        <p class="item-price">${{item.price}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block css-box %}
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/list.css' %}">
+{% endblock %} 
