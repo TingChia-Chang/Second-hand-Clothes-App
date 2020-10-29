@@ -86,6 +86,23 @@ ul#primary-nav li a.selected{
     background-color: #000;
 }
 
+.sort-price{
+    margin: 0 10px;
+}
+
+ul.messages{
+    font-weight: bold;
+    padding: 1em;
+    margin: 0;
+    list-style: none;
+}
+
+ul.messages li.success{
+    background-color: lightgreen;
+    padding: 1em;
+    margin: 0.25em;
+}
+
 div#content {
     min-height: 75vh;
 }

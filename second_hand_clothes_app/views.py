@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import regular_user, admin_user, ClothesList
+from django.http import JsonResponse
+from django.contrib import messages
 
 # Create your views here.
 def clothes_index(request):
@@ -8,10 +10,14 @@ def clothes_index(request):
 
 def clothes_list(request):
     clothes = ClothesList.objects.all()
-    for i in clothes:
-        print(i.picture.url)
     
     context = {'clothes': clothes}
+    return render(request,"second_hand_clothes_app/clothes/list.html", context) 
+
+def clothes_sort(request):
+    clothes = ClothesList.objects.all().order_by('price')
+    
+    context = {'clothes': clothes, 'order_by': 'price'}
     return render(request,"second_hand_clothes_app/clothes/list.html", context) 
 
 def clothes_detail(request, item_id):
@@ -22,10 +28,78 @@ def clothes_detail(request, item_id):
     return render(request,"second_hand_clothes_app/clothes/detail.html", {"clothes_item":clothes_item}) 
 
 def clothes_add_item(request):
-    return render(request,"second_hand_clothes_app/clothes/add_item.html")
 
-def clothes_edit(request):
-    return render(request,"second_hand_clothes_app/clothes/edit.html")
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        picture = request.FILES.get('image')
+        size = request.POST.get('size')
+        price = request.POST.get('price')
+        des = request.POST.get('description')
+
+        cl = ClothesList(
+            name = name,
+            seller = request.session.get('username'),
+            picture = picture,
+            size = size,
+            price = price,
+            description = des,
+        )
+        cl.save()
+        messages.add_message(request, messages.SUCCESS, "You successfully submitted the clothes: %s" % cl.name)
+        return redirect('second_hand_clothes_app:clothes_list')
+    else:
+        return render(request,"second_hand_clothes_app/clothes/add_item.html")
+
+def clothes_edit(request, item_id):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        picture = request.FILES.get('image')
+        size = request.POST.get('size')
+        price = request.POST.get('price')
+        des = request.POST.get('description')
+
+        try:
+            clothes = ClothesList.objects.get(pk=item_id)
+            clothes.name = name
+            clothes.size = size
+            clothes.price = price
+            clothes.description = des
+            if picture:
+                clothes.picture = picture
+            clothes.save()
+            messages.add_message(request, messages.INFO, "You successfully editted the clothes: %s" % clothes.name)
+            return redirect('second_hand_clothes_app:clothes_index')
+        except ClothesList.DoesNotExist:
+            return redirect('second_hand_clothes_app:clothes_index')
+    else:
+        clothes = ClothesList.objects.all()
+        for item in clothes:
+            if item.id == item_id:
+                break
+        return render(request,"second_hand_clothes_app/clothes/edit.html", {"item": item})
+
+def clothes_delete(request, item_id):
+    clothes = ClothesList.objects.get(pk=item_id)
+    ClothesList.objects.get(pk=item_id).delete()
+    messages.add_message(request, messages.WARNING, "You successfully deleted the clothes: %s" % clothes.name)
+    return redirect('second_hand_clothes_app:clothes_index')
+
+
+
+# def clothes_edit_retrieve(request):
+#     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+#     if is_ajax and request.method = "POST":
+#         clothes_id = request.POST.get('clothes_id')
+#         try:
+#             clothes = ClothesList.objects.get(pk=clothes_id)
+
+
+#             return JsonResponse({'success': 'success', 'clothes': clothes}, status=200)
+#         except ClothesList.DoesNotExist:
+#             return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
+#     else:
+#         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+
 
 def clothes_search_result(request):
     return render(request,"second_hand_clothes_app/clothes/search-results.html")

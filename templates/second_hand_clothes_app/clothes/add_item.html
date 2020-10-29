@@ -26,12 +26,12 @@
 
 {% if request.session.username %}
 <h3>Create item</h3>
-<form id="form-box" enctype="multipart/form-data">
+<form id="form-box" action="{% url 'second_hand_clothes_app:clothes_add_item' %}" method="POST" enctype="multipart/form-data">
     <div class="form-item" id="form-name">
-        <label for="name">Name :</label><br>
-        <input class="name-price" id="name" type="text" name="name">
+        <label for="name">Name* :</label><br>
+        <input class="name-price" id="name" type="text" name="name" required>
     </div><!-- #form-item -->
-    <div class="form-item" id="check-women">
+    <!-- <div class="form-item" id="check-women">
         <p>Group:
         <p><br>
         <div class="checkbox-box">
@@ -43,8 +43,8 @@
                 <input type="checkbox" id="men" name="men">
                 <label id="check-label" for="men"> Men</label>
             </div>
-        </div><!-- #checkbox-box -->
-    </div><!-- #form-item -->
+        </div>
+    </div>
     <div class="form-item" id="check-top">
         <p>Kind:
         <p><br>
@@ -57,19 +57,19 @@
                 <input type="checkbox" id="bottom" name="bottom">
                 <label class="check-label" for="bottom"> Buttom</label>
             </div>
-        </div><!-- #checkbox-box -->
-    </div><!-- #form-item -->
+        </div>
+    </div> -->
     <div class="form-item" id="form-size">
-        <label for="size">Size :</label><br>
-        <input class="name-price" type="text" name="size" id="size"><br>
+        <label for="size">Size* :</label><br>
+        <input class="name-price" type="text" name="size" id="size" required><br>
     </div><!-- #form-item -->
     <div class="form-item">
-        <label for="photo">Photo :</label>
-        <button class="upload" id="photo">Upload Photo</button>
+        <label for="photo">Photo* :</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
     </div><!-- #form-item -->
     <div class="form-item" id="form-price">
-        <label for="price">Price :</label><br>
-        <input class="name-price" type="text" name="price" id="price">
+        <label for="price">Price* :</label><br>
+        <input class="name-price" type="text" name="price" id="price" required>
     </div><!-- #form-item -->
     <div class="form-item" id="form-des">
         <label for="description">Description :</label><br>
@@ -78,6 +78,8 @@
     <div id="submit-button">
         <button id="submit">Submit</button>
     </div>
+    {% csrf_token %}
+
 </form>
 {% else %}
 <div id="create-box">

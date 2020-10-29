@@ -7,7 +7,6 @@ class ClothesList(models.Model):
     picture = models.ImageField(upload_to='image/')
     price = models.IntegerField(default=0)
     seller = models.CharField(max_length=200)
-    amount = models.IntegerField(default=0)
     description = models.TextField(blank=True)
     size = models.CharField(max_length=200)
 

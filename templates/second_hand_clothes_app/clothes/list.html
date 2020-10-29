@@ -30,6 +30,10 @@
     <li><a href="#">Bottom</a></li>
 </ul><!-- #nkind-nav -->
 
+<a href="{% url 'second_hand_clothes_app:clothes_sort' %}">
+    <button class="sort-price" id="sort">Sort by Price</button>
+</a>
+
 <div id="item-list">
     {% for item in clothes %}
     <div class="item-box">
@@ -37,7 +41,7 @@
             <img src="{{ item.picture.url }}" alt="item">
         </a>
         <h4>{{item.name}}</h4>
-        <p>Sold by: <a href="#">{{item.seller}} ({{item.amount}})</a></p>
+        <p>Sold by: <a href="#">{{item.seller}}</a></p>
         <p class="item-price">${{item.price}}</p>
     </div>
     {% endfor %}
@@ -46,4 +50,4 @@
 
 {% block css-box %}
     <link rel="stylesheet" type="text/css" href="{% static 'CSS/list.css' %}">
-{% endblock %} 
+{% endblock %}

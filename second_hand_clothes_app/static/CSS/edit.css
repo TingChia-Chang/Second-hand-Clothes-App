@@ -288,11 +288,17 @@ p#footer-nav a {
     }
 
     div#content {
-        height: 700px;
+        min-height: 100vh;
     }
 
     .name-price {
         margin: 0 65px;
+    }
+
+    .item-image {
+        margin: 0 10px;
+        width: 200px;
+        height: 200px;
     }
 
     div#create-box {

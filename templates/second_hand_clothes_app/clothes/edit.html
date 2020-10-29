@@ -24,15 +24,16 @@
 
 {% block content %}
 <h3>Edit item</h3>
-<form id="form-box" enctype="multipart/form-data">
+<form id="form-box" action="{% url 'second_hand_clothes_app:clothes_edit' item.id %}" method="POST" enctype="multipart/form-data">
+    <p> * = required</p>
     <div class="form-item" id="form-name">
-        <label for="name">Name :</label><br>
-        <input class="name-price" id="name" type="text" name="name">
+        <label for="name">Name* :</label><br>
+        <input class="name-price" id="name" type="text" name="name" value="{{item.name}}" required>
     </div><!-- #form-item -->
-    <div class="form-item" id="check-women">
-        <p>Group:
+    <!-- <div class="form-item" id="check-women">
+        <p>Group*:
         <p><br>
-        <div class="checkbox-box">
+        <div class="checkbox-box"> 
             <div class="checkbox-item">
                 <input type="checkbox" id="women" name="women">
                 <label class="check-label" for="women"> Women</label>
@@ -41,10 +42,10 @@
                 <input type="checkbox" id="men" name="men">
                 <label id="check-label" for="men"> Men</label>
             </div>
-        </div><!-- #checkbox-box -->
-    </div><!-- #form-item -->
+        </div>
+    </div>
     <div class="form-item" id="check-top">
-        <p>Kind:
+        <p>Kind*:
         <p><br>
         <div class="checkbox-box">
             <div class="checkbox-item">
@@ -55,27 +56,29 @@
                 <input type="checkbox" id="bottom" name="bottom">
                 <label class="check-label" for="bottom"> Buttom</label>
             </div>
-        </div><!-- #checkbox-box -->
-    </div><!-- #form-item -->
+        </div>
+    </div> -->
     <div class="form-item" id="form-size">
-        <label for="size">Size :</label><br>
-        <input class="name-price" type="text" name="size" id="size"><br>
+        <label for="size">Size* :</label><br>
+        <input class="name-price" type="text" name="size" id="size" value="{{item.size}}" required><br>
     </div><!-- #form-item -->
     <div class="form-item">
         <label for="photo">Photo :</label>
-        <button class="upload" id="photo">Upload Photo</button>
+        <img class="item-image" src="{{item.picture.url}}" alt="item">
+        <input type="file" id="image" name="image" accept="image/*">
     </div><!-- #form-item -->
     <div class="form-item" id="form-price">
-        <label for="price">Price :</label><br>
-        <input class="name-price" type="text" name="price" id="price">
+        <label for="price">Price* :</label><br>
+        <input class="name-price" type="text" name="price" id="price" value="{{item.price}}" required>
     </div><!-- #form-item -->
     <div class="form-item" id="form-des">
         <label for="description">Description :</label><br>
-        <input class="des-box" type="text" name="description" id="description"><br>
+        <input class="des-box" type="text" name="description" id="description" value="{{item.description}}"><br>
     </div><!-- #form-item -->
     <div id="submit-button">
         <button id="submit">Save</button>
     </div>
+    {% csrf_token %}
 </form>
 {% endblock %}
 

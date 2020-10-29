@@ -36,18 +36,20 @@
             <div class="container py-2 item-container">
                 <div class="row">
                     <div class="col-4">
-                        <img src="{% static item.picture %}" alt="item">
+                        <img src="{{ item.picture.url }}" alt="item">
                     </div>
                     <div class="col-5">
                         <h4>{{item.name}}</h4>
                         <h4 class="item-price">${{item.price}}</h4>
                     </div>
                     <div class="col-3">
-                        <a href="{% url 'second_hand_clothes_app:clothes_edit' %}"><button
-                                class="btn btn-secondary">Edit</button></a>
+                        <a href="{% url 'second_hand_clothes_app:clothes_edit' item.id %}">
+                            <button class="btn btn-secondary">Edit</button>
+                        </a>
                         {% if request.session.role == "admin" %}
-                        <button class="btn btn-danger" id="delete" data-toggle="modal"
-                            data-target="#Modal">Delete</button>
+                        <a href="{% url 'second_hand_clothes_app:clothes_delete' item.id %}">
+                            <button class="btn btn-danger" id="delete" data-toggle="modal" data-target="#Modal">Delete</button>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
