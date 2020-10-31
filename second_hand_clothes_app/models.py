@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
@@ -9,6 +10,7 @@ class ClothesList(models.Model):
     seller = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     size = models.CharField(max_length=200)
+    comment = ArrayField(models.TextField(blank=True), blank=True)
 
 # class ClothesList():
 #     def __init__(self, id, name, url, picture, price, seller, amount, description, size):

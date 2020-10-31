@@ -43,10 +43,11 @@ def clothes_add_item(request):
             size = size,
             price = price,
             description = des,
+            comment = []
         )
         cl.save()
         messages.add_message(request, messages.SUCCESS, "You successfully submitted the clothes: %s" % cl.name)
-        return redirect('second_hand_clothes_app:clothes_list')
+        return redirect('second_hand_clothes_app:clothes_detail', cl.id)
     else:
         return render(request,"second_hand_clothes_app/clothes/add_item.html")
 
@@ -67,8 +68,8 @@ def clothes_edit(request, item_id):
             if picture:
                 clothes.picture = picture
             clothes.save()
-            messages.add_message(request, messages.INFO, "You successfully editted the clothes: %s" % clothes.name)
-            return redirect('second_hand_clothes_app:clothes_index')
+            messages.add_message(request, messages.INFO, "You successfully edited the clothes: %s" % clothes.name)
+            return redirect('second_hand_clothes_app:clothes_detail', clothes.id)
         except ClothesList.DoesNotExist:
             return redirect('second_hand_clothes_app:clothes_index')
     else:
@@ -82,23 +83,43 @@ def clothes_delete(request, item_id):
     clothes = ClothesList.objects.get(pk=item_id)
     ClothesList.objects.get(pk=item_id).delete()
     messages.add_message(request, messages.WARNING, "You successfully deleted the clothes: %s" % clothes.name)
-    return redirect('second_hand_clothes_app:clothes_index')
+    return redirect('second_hand_clothes_app:clothes_list')
 
 
 
-# def clothes_edit_retrieve(request):
-#     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
-#     if is_ajax and request.method = "POST":
-#         clothes_id = request.POST.get('clothes_id')
-#         try:
-#             clothes = ClothesList.objects.get(pk=clothes_id)
+def clothes_show_comment(request):
+    is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+    if is_ajax and request.method == "POST":
+        clothes_id = request.POST.get('clothes_id')
+        try:
+            clothes = ClothesList.objects.get(pk=clothes_id)
 
 
-#             return JsonResponse({'success': 'success', 'clothes': clothes}, status=200)
-#         except ClothesList.DoesNotExist:
-#             return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
-#     else:
-#         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+            return JsonResponse({'success': 'success', 'comment': clothes.comment}, status=200)
+        except ClothesList.DoesNotExist:
+            return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+
+def clothes_add_comment(request):
+    is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+    if is_ajax and request.method == "POST":
+        clothes_id = request.POST.get('clothes_id')
+        clothes_comment = request.POST.get('clothes_comment')
+        if clothes_comment != "":
+            comment = request.session.get("username") + ":" + clothes_comment
+            try:
+                clothes = ClothesList.objects.get(pk=clothes_id)
+                clothes.comment.append(comment)
+                clothes.save()
+
+                return JsonResponse({'success': 'success', 'comment': comment}, status=200)
+            except ClothesList.DoesNotExist:
+                return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
+        else:
+            return JsonResponse({'error': 'No comment'}, status=200)    
+    else:
+        return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
 
 
 def clothes_search_result(request):

@@ -35,25 +35,6 @@ div#login-box {
     margin: 0 5px;
 }
 
-ul.messages{
-    font-weight: bold;
-    padding: 1em;
-    margin: 0;
-    list-style: none;
-}
-
-ul.messages li.info{
-    background-color: lightskyblue;
-    padding: 1em;
-    margin: 0.25em;
-}
-
-ul.messages li.warning{
-    background-color: red;
-    padding: 1em;
-    margin: 0.25em;
-}
-
 img#notification {
     display: none;
     float: right;
@@ -104,9 +85,9 @@ ul#primary-nav li a.selected{
     height: 100px;
 }
 
-.dashboard{
+/* .dashboard{
     height: 580px;
-}
+} */
 
 .dash-col > h1{
     border-bottom: 1px solid gray;

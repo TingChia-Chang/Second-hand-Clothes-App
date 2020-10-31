@@ -3,7 +3,8 @@ $(document).ready(function(){
     // checkForm();
     navBar();
     addToCart();
-    editRetrieve()
+    showComment();
+    addComment();
 })
 
 function checkQueryString(){
@@ -210,17 +211,18 @@ function addToCart(){
     //show a confirm message when the button is clicked
 }
 
-function editRetrieve(){
-    $('#edit').click(function(e){
-        var clothes_id = $(this).attr('clothes-id');
+function showComment(){
+    $('#show_comment').click(function(e){
+        var clothes_id = $(this).attr('data-clothes-id');
+        var clothes_url = $(this).attr('data-ajax-url');
         $.ajax({
  
             // The URL for the request
-            url: "post.php",
+            url: clothes_url,
          
             // The data to send (will be converted to a query string)
             data: {
-                clothes_id: clothes_id
+                clothes_id: clothes_id,
             },
          
             // Whether this is a POST or GET request
@@ -228,26 +230,100 @@ function editRetrieve(){
          
             // The type of data we expect back
             dataType : "json",
+            headers : {'X-CSRFToken': csrftoken},
+            context: this
         })
           // Code to run if the request succeeds (is done);
           // The response is passed to the function
           .done(function( json ) {
-              alert("request received successfully");
-             $( "<h1>" ).text( json.title ).appendTo( "body" );
-             $( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+            // alert("request received successfully");
+            // console.log(json.comment)
+            $( ".show" ).hide();
+            for(comment in json.comment){
+                $( "<p>" ).text( json.comment[comment] ).appendTo("#comment-content");
+            }
+            $(this).hide()
+
           })
           // Code to run if the request fails; the raw request and
           // status codes are passed to the function
           .fail(function( xhr, status, errorThrown ) {
-            alert( "Sorry, there was a problem!" );
+            // alert( "Sorry, there was a problem!" );
             console.log( "Error: " + errorThrown );
-            console.log( "Status: " + status );
-            console.dir( xhr );
+            // console.log( "Status: " + status );
+            // console.dir( xhr );
           })
           // Code to run regardless of success or failure;
           .always(function( xhr, status ) {
-            alert( "The request is complete!" );
+            // alert( "The request is complete!" );
           });
     })
     
 }
+
+function addComment(){
+    $('#comment-button').click(function(e){
+        console.log('click')
+        var clothes_id = $(this).attr('data-clothes-id');
+        var clothes_url = $(this).attr('data-ajax-url');
+        var clothes_comment = $('#comment-input').val();
+        $.ajax({
+ 
+            // The URL for the request
+            url: clothes_url,
+         
+            // The data to send (will be converted to a query string)
+            data: {
+                clothes_id: clothes_id,
+                clothes_comment : clothes_comment
+            },
+         
+            // Whether this is a POST or GET request
+            type: "POST",
+         
+            // The type of data we expect back
+            dataType : "json",
+            headers : {'X-CSRFToken': csrftoken},
+            context: this
+        })
+          // Code to run if the request succeeds (is done);
+          // The response is passed to the function
+          .done(function( json ) {
+            // alert("request received successfully");
+            // console.log(json.comment)
+            if(!json.error){
+                $( "<p class='show'>" ).text( json.comment ).appendTo("#comment-content");
+            }
+          })
+          // Code to run if the request fails; the raw request and
+          // status codes are passed to the function
+          .fail(function( xhr, status, errorThrown ) {
+            // alert( "Sorry, there was a problem!" );
+            console.log( "Error: " + errorThrown );
+            // console.log( "Status: " + status );
+            // console.dir( xhr );
+          })
+          // Code to run regardless of success or failure;
+          .always(function( xhr, status ) {
+            // alert( "The request is complete!" );
+          });
+    })
+    
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');

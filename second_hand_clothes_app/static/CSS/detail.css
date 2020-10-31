@@ -187,6 +187,27 @@ p#footer-nav a {
     color: cadetblue;
 }
 
+ul.messages{
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    font-weight: bold;
+    padding: 1em;
+    margin: 0;
+    list-style: none;
+}
+
+ul.messages li.success{
+    background-color: lightgreen;
+    padding: 0.5em;
+    margin: 0.25em;
+}
+ul.messages li.info{
+    background-color: lightskyblue;
+    padding: 0.5em;
+    margin: 0.25em;
+}
+
 @media screen and (min-width: 768px){
     img#notification {
         display: block;
@@ -297,7 +318,6 @@ p#footer-nav a {
 
     div#comment-box {
         width: 30%;
-        height: 200px;
         margin: 0px 100px;
     }
 

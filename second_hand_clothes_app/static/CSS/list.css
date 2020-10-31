@@ -97,8 +97,8 @@ ul.messages{
     list-style: none;
 }
 
-ul.messages li.success{
-    background-color: lightgreen;
+ul.messages li.warning{
+    background-color: red;
     padding: 1em;
     margin: 0.25em;
 }

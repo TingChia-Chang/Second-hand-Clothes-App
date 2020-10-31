@@ -35,16 +35,23 @@
 </a>
 
 <div id="item-list">
-    {% for item in clothes %}
-    <div class="item-box">
-        <a href="{% url 'second_hand_clothes_app:clothes_detail' item.id %}">
-            <img src="{{ item.picture.url }}" alt="item">
-        </a>
-        <h4>{{item.name}}</h4>
-        <p>Sold by: <a href="#">{{item.seller}}</a></p>
-        <p class="item-price">${{item.price}}</p>
-    </div>
-    {% endfor %}
+    
+    {% if clothes %}
+        {% for item in clothes %}
+        <div class="item-box">
+            <a href="{% url 'second_hand_clothes_app:clothes_detail' item.id %}">
+                <img src="{{ item.picture.url }}" alt="item">
+            </a>
+            <h4>{{item.name}}</h4>
+            <p>Sold by: <a href="#">{{item.seller}}</a></p>
+            <p class="item-price">${{item.price}}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h1>There are no clothes right now.</h1>
+    {% endif %}
+        
+    
 </div>
 {% endblock %}
 
