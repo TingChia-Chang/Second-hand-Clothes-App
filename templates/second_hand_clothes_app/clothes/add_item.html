@@ -13,13 +13,14 @@
     <input class="search-input" type="text" id="search" name="search-clothes" placeholder="Search clothes">
     <input class="go-button" type="submit" name="search" value="Go">
 </form>
-<img id="notification" src="{% static 'pictures/notification.svg' %}" alt="notification">
 <img src="{% static 'pictures/cart.png' %}" alt="cart">
+<a href="{% url 'users:register' %}"> Register </a>
 {% if request.session.username %}
 <p>Hi, <a href="#">{{request.session.username}}</a></p>
 {% else %}
 <a href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">log In</a>
 {% endif %}
+
 {% endblock %}
 
 {% block content %}
@@ -85,7 +86,7 @@
 <div id="create-box">
     <h3>Create item</h3>
     <div id="warn-box">
-        <p>Not a member? <a href="#">Register</a> to be a member and <a
+        <p>Not a member? <a href="{% url 'users:register' %}">Register</a> to be a member and <a
                 href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">Sign In</a> to sell your items.</p>
     </div>
 </div><!-- #create-box -->

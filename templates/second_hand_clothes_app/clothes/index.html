@@ -15,9 +15,8 @@
     <input class="search-input" type="text" id="search" name="search-clothes" placeholder="Search clothes">
     <input class="go-button" type="submit" name="search" value="Go">
 </form>
-<img id="notification" src="{% static 'pictures/notification.svg' %}" alt="notification">
 <img src="{% static 'pictures/cart.png' %}" alt="cart">
-
+<a href="{% url 'users:register' %}">Register </a>
 {% if request.session.username %}
 <p>Hi, <a href="#">{{request.session.username}}</a></p>
 {% else %}
