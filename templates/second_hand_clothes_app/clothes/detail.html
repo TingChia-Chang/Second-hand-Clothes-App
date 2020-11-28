@@ -15,7 +15,7 @@
     <h3>{{clothes_item.name}}</h3>
     <p id="price"> ${{clothes_item.price}}</p>
     <p>Size : {{clothes_item.size}}</p>
-    <p>Sold by : <a href="#">{{clothes_item.seller}}</a></p>
+    <p>Sold by : <a href="{% url 'users:profile' clothes_item.user.username %}">{{clothes_item.seller}}</a></p>
     <button id="add_cart">Add To Cart</button>
     {% if request.session.username %}
     <a href="{% url 'second_hand_clothes_app:clothes_edit' clothes_item.id %}">

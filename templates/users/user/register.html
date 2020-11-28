@@ -8,16 +8,36 @@
     <form action="{% url 'users:register' %}" method="POST">
         {% csrf_token %}
         <p>* = required</p>
-        <label for="register-username">Username*</label>
-        <input id="register-username" name="username" type="text" required>
+        <div class="mb-3">
+            <label for="register-username" class="form-label">Username*</label>
+            <input class="form-control" id="register-username" name="username" type="text" required>
+        </div>
+        <div class="mb-3">
+            <label for="register-lastname" class="form-label">Last Name*</label>
+            <input class="form-control" id="register-lastname" name="lastname" type="text" required>
+        </div>
+        <div class="mb-3">
+            <label for="register-firstname" class="form-label">First Name*</label>
+            <input class="form-control" id="register-firstname" name="firstname" type="text" required>
+        </div>
+        <div class="mb-3">
+            <label for="sexual-select" class="form-label">Choose your sex:</label>
+            <select class="form-control" name="sex" id="sexual-select" required>
+                <option value="">--Please choose an option--</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="register-email" class="form-label">Email*</label>
+            <input class="form-control" id="register-email" name="email" type="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="register-password" class="form-label">Password*</label>
+            <input class="form-control" id="register-password" name="password" type="password" required>
+        </div>
 
-        <label for="register-email">Email*</label>
-        <input id="register-email" name="email" type="email" required>
-
-        <label for="register-password">Password*</label>
-        <input id="register-password" name="password" type="password" required>
-
-        <input type="submit" name="submit" value="Register">
+        <input class="btn btn-primary" type="submit" name="submit" value="Register">
         
     </form>
 </div>

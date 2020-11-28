@@ -220,6 +220,10 @@ p#footer-nav a {
         color: var(--main-sunset);
     }
 
+    div#content {
+        min-height: 90vh;
+    }
+
 
 
    

@@ -9,7 +9,7 @@
 <div class="container dashboard">
     <div class="row">
         <div class="col-sm-12 col-md-6 dash-col">
-            <h1>Your Dashboard</h1>
+            <h1>Welcome to your dashboard, <strong>{{request.session.username}}</strong></h1>
             {% for item in clothes %}
             <div class="container py-2 item-container">
                 <div class="row">
@@ -33,6 +33,9 @@
                 </div>
             </div>
             {% endfor %}
+        </div>
+        <div class="col-sm-12 col-md-6">
+            {% include 'actions/action/feed.html' %}
         </div>
     </div>
 

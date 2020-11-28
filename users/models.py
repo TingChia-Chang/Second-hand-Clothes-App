@@ -8,6 +8,7 @@ from django.dispatch import receiver
 class Detail(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(default="regular", max_length=50)
+    sex = models.CharField(default="Male", max_length=50)
 
 @receiver(post_save, sender=User)
 def create_user_detail(sender, instance, created, **kwargs):
