@@ -23,7 +23,7 @@
                 <img src="{{ item.picture.url }}" alt="item">
             </a>
             <h4>{{item.name}}</h4>
-            <p>Sold by: <a href="#">{{item.seller}}</a></p>
+            <p>Sold by: <a href="{% url 'users:profile' item.user.username %}">{{item.user.username}}</a></p>
             <p class="item-price">${{item.price}}</p>
         </div>
         {% endfor %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import regular_user, admin_user, ClothesList
+from .models import regular_user, admin_user, ClothesList, User
 from django.http import JsonResponse
 from django.contrib import messages
 
@@ -36,6 +36,8 @@ def clothes_add_item(request):
         price = request.POST.get('price')
         des = request.POST.get('description')
 
+        user = User.objects.get(username=request.session.get("username"))
+
         cl = ClothesList(
             name = name,
             seller = request.session.get('username'),
@@ -43,7 +45,8 @@ def clothes_add_item(request):
             size = size,
             price = price,
             description = des,
-            comment = []
+            comment = [],
+            user=user,
         )
         cl.save()
         messages.add_message(request, messages.SUCCESS, "You successfully submitted the clothes: %s" % cl.name)
