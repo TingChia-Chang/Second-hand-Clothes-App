@@ -14,6 +14,4 @@ urlpatterns = [
     path('add_item/', views.clothes_add_item, name="clothes_add_item"),
     path('search_result/', views.clothes_search_result, name="clothes_search_result"),
     path('sign_in/', views.clothes_sign_in, name="clothes_sign_in"),
-    path('sign_in_action', views.sign_in, name="sign_in"),
-    path('log_out/', views.log_out, name="log_out"),
 ]

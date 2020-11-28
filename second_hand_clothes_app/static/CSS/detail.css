@@ -260,6 +260,7 @@ ul.messages li.info{
     div#content {
         display: flex;
         flex-wrap: wrap;
+        min-height: 74vh;
     }
 
     div#image-box {

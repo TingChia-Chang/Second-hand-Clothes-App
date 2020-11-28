@@ -2,7 +2,7 @@
 {% load static %}
 {% block page-title %} Sign In Page {% endblock %}
 
-{% block login-box %}
+<!-- {% block login-box %}
 <img id="bar" src="{% static 'pictures/bar.svg' %}" alt="bar">
 <img id="search-image" src="{% static 'pictures/search.svg' %}" alt="search">
 <form class="search-form" action="{% url 'second_hand_clothes_app:clothes_search_result' %}" method="GET">
@@ -12,12 +12,12 @@
 <img src="{% static 'pictures/cart.png' %}" alt="cart">
 <a href="{% url 'users:register' %}">Register </a>
 <a href="{% url 'second_hand_clothes_app:clothes_sign_in' %}">log In</a>
-{% endblock %}
+{% endblock %} -->
 
 {% block content %}
 <div class="container my-5 signin">
     <h2>Sign In</h2>
-    <form action="{% url 'second_hand_clothes_app:sign_in' %}" method="POST">
+    <form action="{% url 'users:sign_in' %}" method="POST">
         {% csrf_token %}
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
