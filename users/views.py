@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from actions.models import Action
+from users.models import Detail
 # Create your views here.
 
 def profile(request, username):
@@ -17,12 +18,48 @@ def register(request):
         first_name = request.POST.get('firstname')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        sex = request.POST.get('sex')
+
         user = User.objects.create_user(username, email, password, last_name=last_name, first_name=first_name)
+        detail = Detail.objects.get(user_id=user.id)
+        detail.sex = sex
+        detail.save()
         messages.add_message(request, messages.SUCCESS, "You successfully registerd with the username: %s" % user.username)
 
         return redirect('second_hand_clothes_app:clothes_index')
     else:
         return render(request,"users/user/register.html",)
+
+def edit_profile(request, username):
+    if request.method == 'POST':
+        last_name = request.POST.get('lastname')
+        first_name = request.POST.get('firstname')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        sex = request.POST.get('sex')
+
+        try:
+            user = get_object_or_404(User, username=username)
+            detail = Detail.objects.get(user_id=user.id)
+            user.last_name = last_name
+            user.first_name = first_name
+            user.email = email
+            user.password = password
+            if request.POST.get('role'):
+                detail.role = request.POST.get('role')
+            detail.sex = sex
+            detail.save()
+            user.save()
+
+            messages.add_message(request, messages.INFO, "You successfully edited the profile")
+            return redirect('users:profile', user.username)
+        except User.DoesNotExist:
+            return redirect('users:profile', user.username)
+    else:
+        user1 = get_object_or_404(User, username=username)
+        detail1 = Detail.objects.get(user_id=user1.id)
+        print(detail1.sex)
+        return render(request, "users/user/edit_profile.html", {"user": user1})
 
 def login_user(request):
     username = request.POST.get("username")
@@ -43,3 +80,5 @@ def logout_user(request):
     del request.session['username']
     del request.session['role']
     return redirect('second_hand_clothes_app:clothes_index')
+
+

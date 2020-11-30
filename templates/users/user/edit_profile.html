@@ -1,0 +1,57 @@
+{% extends "second_hand_clothes_app/base.html" %}
+{% load static %}
+{% block page-title %} Edit Profile {% endblock %}
+
+{% block content %}
+<div class="container my-5 signin">
+    <h2>Edit Profile</h2>
+    <form action="{% url 'users:edit_profile' user.username %}" method="POST">
+        {% csrf_token %}
+        <p>* = required</p>
+        <div class="mb-3">
+            <label for="register-lastname" class="form-label">Last Name*</label>
+            <input class="form-control" id="register-lastname" name="lastname" type="text" value="{{user.last_name}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="register-firstname" class="form-label">First Name*</label>
+            <input class="form-control" id="register-firstname" name="firstname" type="text" value="{{user.first_name}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="sexual-select" class="form-label">Choose your sex:</label>
+            <select class="form-control" name="sex" id="sexual-select" required>
+                <option value="">--Please choose an option--</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="register-email" class="form-label">Email*</label>
+            <input class="form-control" id="register-email" name="email" type="email" value="{{user.email}}" required>
+        </div>
+        <div class="mb-3">
+            <label for="register-password" class="form-label">Password*</label>
+            <input class="form-control" id="register-password" name="password" type="password" value="{{user.password}}" required>
+        </div>
+
+        
+        {% if user.detail.role == "admin" %}
+        <div class="mb-3">
+            <label for="register-role" class="form-label">Role*</label>
+            <input class="form-control" id="register-role" name="role" type="text" value="{{user.detail.role}}" required>
+        </div>
+        {% endif %}
+            
+
+        <input class="btn btn-primary" type="submit" name="submit" value="Save">
+        
+    </form>
+</div>
+{% endblock %}
+
+
+{% block css-box %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
+    integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/register.css' %}">
+{% endblock %}
+
