@@ -6,7 +6,6 @@ urlpatterns = [
     path('', views.clothes_index, name="clothes_index"),
     path('list/', views.clothes_list, name="clothes_list"),
     path('list/sort_by_price', views.clothes_sort, name="clothes_sort"),
-    path('list/show_comment', views.clothes_show_comment, name="clothes_show_comment"),
     path('list/add_comment', views.clothes_add_comment, name="clothes_add_comment"),
     path('list/<int:item_id>', views.clothes_detail, name="clothes_detail"),
     path('list/<int:item_id>/edit', views.clothes_edit, name="clothes_edit"),

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'actions.apps.ActionsConfig',
+    'comments.apps.CommentsConfig',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

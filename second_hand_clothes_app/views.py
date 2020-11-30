@@ -3,6 +3,10 @@ from .models import regular_user, admin_user, ClothesList, User
 from django.http import JsonResponse
 from django.contrib import messages
 from actions.models import Action
+from comments.models import Comment
+from django.core import serializers
+from django.urls import reverse
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 # Create your views here.
 def clothes_index(request):
@@ -27,7 +31,10 @@ def clothes_detail(request, item_id):
     for clothes_item in clothes:
         if clothes_item.id == item_id:
             break
-    return render(request,"second_hand_clothes_app/clothes/detail.html", {"clothes_item":clothes_item}) 
+    user = User.objects.get(username=clothes_item.seller)
+    username = request.session.get("username")
+    comments = Comment.objects.all().filter(user_id=user.id).order_by('-created_time')
+    return render(request,"second_hand_clothes_app/clothes/detail.html", {"clothes_item":clothes_item, "comments":comments}) 
 
 def clothes_add_item(request):
 
@@ -118,32 +125,39 @@ def clothes_delete(request, item_id):
 
 
 
-def clothes_show_comment(request):
-    is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
-    if is_ajax and request.method == "POST":
-        clothes_id = request.POST.get('clothes_id')
-        try:
-            clothes = ClothesList.objects.get(pk=clothes_id)
+# def clothes_show_comment(request):
+#     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+#     if is_ajax and request.method == "POST":
+#         clothes_id = request.POST.get('clothes_id')
+#         clothes = ClothesList.objects.get(pk=clothes_id)
+        # user = User.objects.get(username=clothes.seller)
+        # try:
+        #     comments_json = serializers.serialize("json", Comment.objects.all().filter(user_id=user.id))
+        #     username = request.session.get("username")
+        #     url = reverse('users:profile', args=[username])
 
-
-            return JsonResponse({'success': 'success', 'comment': clothes.comment}, status=200)
-        except ClothesList.DoesNotExist:
-            return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
-    else:
-        return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+        #     return JsonResponse({'success': 'success', 'comment': comments_json, 'url': url}, status=200)
+        # except ClothesList.DoesNotExist:
+        #     return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
+#     else:
+#         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
 
 def clothes_add_comment(request):
-    user = User.objects.get(username=request.session.get("username"))
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
     if is_ajax and request.method == "POST":
         clothes_id = request.POST.get('clothes_id')
         clothes_comment = request.POST.get('clothes_comment')
+        clothes = ClothesList.objects.get(pk=clothes_id)
+        user = User.objects.get(username=clothes.seller)
         if clothes_comment != "":
-            comment = request.session.get("username") + ":" + clothes_comment
             try:
-                clothes = ClothesList.objects.get(pk=clothes_id)
-                clothes.comment.append(comment)
-                clothes.save()
+                # clothes = ClothesList.objects.get(pk=clothes_id)
+                cm = Comment(
+                    user = user,
+                    comment = clothes_comment,
+                    username = request.session.get("username"),
+                )
+                cm.save()
 
                 action = Action(
                     user = user,
@@ -151,8 +165,10 @@ def clothes_add_comment(request):
                     target = clothes,
                 )
                 action.save()
+                url = reverse('users:profile', args=[request.session.get("username")])
+                time = naturaltime(cm.created_time)
 
-                return JsonResponse({'success': 'success', 'comment': comment}, status=200)
+                return JsonResponse({'success': 'success', 'comment': clothes_comment, 'url': url, 'username': request.session.get("username"), 'time':time}, status=200)
             except ClothesList.DoesNotExist:
                 return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
         else:

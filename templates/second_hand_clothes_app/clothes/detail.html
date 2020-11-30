@@ -1,6 +1,7 @@
 {% extends "second_hand_clothes_app/base.html" %}
 {% load static %}
 {% block page-title %} Detail Page {% endblock %}
+{% load humanize %}
 
 
 
@@ -35,9 +36,27 @@
 
 <div id="comment-box">
     <h3>Comments About the Seller</h3>
-    <!-- <p id="comment-title"></p> -->
-    <div id="comment-content"></div>
-    <button id="show_comment" data-clothes-id="{{clothes_item.id}}" data-ajax-url="{% url 'second_hand_clothes_app:clothes_show_comment' %}">Show comments</button>
+    <div id="comment-content">
+        
+        {% if comments %}
+        {% for comment in comments %}
+        <div class="show-comments">
+            <p><a href="{% url 'users:profile' comment.username %}">{{comment.username}}</a>: {{comment.comment}}</p>
+            <p>{{comment.created_time | naturaltime}}</p>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <div class="no-comment">
+            <p>No comment.</p>
+        </div>
+            
+        {% endif %}
+            
+        
+        
+            
+    </div>
     
     {% if request.session.username %}
     <input id="comment-input" type="text" placeholder="leave a comment ....">

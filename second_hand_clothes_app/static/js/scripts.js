@@ -3,7 +3,7 @@ $(document).ready(function(){
     // checkForm();
     navBar();
     addToCart();
-    showComment();
+    // showComment();
     addComment();
 })
 
@@ -211,55 +211,63 @@ function addToCart(){
     //show a confirm message when the button is clicked
 }
 
-function showComment(){
-    $('#show_comment').click(function(e){
-        var clothes_id = $(this).attr('data-clothes-id');
-        var clothes_url = $(this).attr('data-ajax-url');
-        $.ajax({
+// function showComment(){
+//     $('#show_comment').click(function(e){
+//         var clothes_id = $(this).attr('data-clothes-id');
+//         var clothes_url = $(this).attr('data-ajax-url');
+//         $.ajax({
  
-            // The URL for the request
-            url: clothes_url,
+//             // The URL for the request
+//             url: clothes_url,
          
-            // The data to send (will be converted to a query string)
-            data: {
-                clothes_id: clothes_id,
-            },
+//             // The data to send (will be converted to a query string)
+//             data: {
+//                 clothes_id: clothes_id,
+//             },
          
-            // Whether this is a POST or GET request
-            type: "POST",
+//             // Whether this is a POST or GET request
+//             type: "POST",
          
-            // The type of data we expect back
-            dataType : "json",
-            headers : {'X-CSRFToken': csrftoken},
-            context: this
-        })
-          // Code to run if the request succeeds (is done);
-          // The response is passed to the function
-          .done(function( json ) {
-            // alert("request received successfully");
-            // console.log(json.comment)
-            $( ".show" ).hide();
-            for(comment in json.comment){
-                $( "<p>" ).text( json.comment[comment] ).appendTo("#comment-content");
-            }
-            $(this).hide()
+//             // The type of data we expect back
+//             dataType : "json",
+//             headers : {'X-CSRFToken': csrftoken},
+//             context: this
+//         })
+//           // Code to run if the request succeeds (is done);
+//           // The response is passed to the function
+//           .done(function( json ) {
+//             // alert("request received successfully");
+//             // console.log(json.comment)
+//             // $( ".show" ).hide();
 
-          })
-          // Code to run if the request fails; the raw request and
-          // status codes are passed to the function
-          .fail(function( xhr, status, errorThrown ) {
-            // alert( "Sorry, there was a problem!" );
-            console.log( "Error: " + errorThrown );
-            // console.log( "Status: " + status );
-            // console.dir( xhr );
-          })
-          // Code to run regardless of success or failure;
-          .always(function( xhr, status ) {
-            // alert( "The request is complete!" );
-          });
-    })
+//             comments = JSON.parse(json.comment)
+//             console.log(comments[0].fields)
+//             for(comment in comments){
+//                 console.log( comments[comment].fields.comment );
+//                 console.log( comments[comment].fields.username );
+//                 $("#comment-content").prepend('<div class="show-comment"><p><a href="'+json.url+'">'+comments[comment].fields.username+'</a> : '+comments[comment].fields.comment+'</p><p>'+comments[comment].fields.created_time+'</p></div>')
+//                 // $( "<p>" ).text( comments[comment].fields.comment ).appendTo("#comment-content");
+                
+//             }
+//             // json.comment[comment]
+//             $(this).hide()
+
+//           })
+//           // Code to run if the request fails; the raw request and
+//           // status codes are passed to the function
+//           .fail(function( xhr, status, errorThrown ) {
+//             // alert( "Sorry, there was a problem!" );
+//             console.log( "Error: " + errorThrown );
+//             // console.log( "Status: " + status );
+//             // console.dir( xhr );
+//           })
+//           // Code to run regardless of success or failure;
+//           .always(function( xhr, status ) {
+//             // alert( "The request is complete!" );
+//           });
+//     })
     
-}
+// }
 
 function addComment(){
     $('#comment-button').click(function(e){
@@ -292,7 +300,8 @@ function addComment(){
             // alert("request received successfully");
             // console.log(json.comment)
             if(!json.error){
-                $( "<p class='show'>" ).text( json.comment ).appendTo("#comment-content");
+                $("#comment-content").prepend('<div class="show-comment"><p><a href="'+json.url+'">'+json.username+'</a> : '+json.comment+'</p><p>'+json.time+'</p></div>')
+                $(".no-comment").remove()
             }
           })
           // Code to run if the request fails; the raw request and
