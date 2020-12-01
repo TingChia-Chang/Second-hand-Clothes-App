@@ -48,7 +48,6 @@
         <ul id="primary-nav">
             <li><a href="{% url 'second_hand_clothes_app:clothes_index' %}">Home</a></li>
             <li><a href="{% url 'second_hand_clothes_app:clothes_list' %}">Women</a></li>
-            <li><a href="#">Men</a></li>
             <li><a href="{% url 'second_hand_clothes_app:clothes_add_item' %}">Sell your items</a></li>
         </ul><!-- #navigatiom button -->
 
@@ -73,14 +72,9 @@
 
     <div id="footer">
 
-        <div id="subscribe-box">
-            <img src="{% static 'pictures/envelope.svg' %}" alt="envelope">
-            <input type="email" id="subscribe_email" name="subscribe" placeholder="enter your email">
-            <button id="subscribe_button">Subscribe</button>
-        </div><!-- #subscribe-box -->
 
         <p id="footer-nav"><a href="{% url 'second_hand_clothes_app:clothes_index' %}">Home</a> | <a
-                href="{% url 'second_hand_clothes_app:clothes_list' %}">Women</a> | <a href="#">Men</a> | <a
+                href="{% url 'second_hand_clothes_app:clothes_list' %}">Women</a> | <a
                 href="{% url 'second_hand_clothes_app:clothes_add_item' %}">Sell your items</a></p>
         <!-- #footer-nav -->
     </div><!-- #footer -->

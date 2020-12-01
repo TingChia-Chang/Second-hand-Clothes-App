@@ -143,6 +143,7 @@ def clothes_delete(request, item_id):
 #         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
 
 def clothes_add_comment(request):
+    user1 = User.objects.get(username=request.session.get("username"))
     is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
     if is_ajax and request.method == "POST":
         clothes_id = request.POST.get('clothes_id')
@@ -160,7 +161,7 @@ def clothes_add_comment(request):
                 cm.save()
 
                 action = Action(
-                    user = user,
+                    user = user1,
                     verb = "add a comment to the item",
                     target = clothes,
                 )
