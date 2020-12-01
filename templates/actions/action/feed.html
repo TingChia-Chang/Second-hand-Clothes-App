@@ -3,8 +3,13 @@
 <ul>
 {% for action in actions %}
 
-    <li>{{action.user.username}} {{action.verb}} "<a href="{{action.target.get_absolute_url}}">{{action.target}}</a>" ({{action.created_time}})</li>
-
+    
+    {% if action.verb == "edit the profile" %}
+    <li>{{action.user.username}} {{action.verb}} "<a href="{% url 'users:profile' action.user.username %}">{{action.target}}</a>" ({{action.created_time}})</li>
+    {% else %}
+    <li>{{action.user.username}} {{action.verb}} "<a href="{{action.target.get_absolute_url}}">{{action.target}}</a>" ({{action.created_time}})</li> 
+    {% endif %}
+        
 {% empty %}
 
     <li>No activity yet.</li>

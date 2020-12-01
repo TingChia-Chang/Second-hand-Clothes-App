@@ -51,6 +51,13 @@ def edit_profile(request, username):
             detail.save()
             user.save()
 
+            action = Action(
+                user = user,
+                verb = "edit the profile",
+                target = user,
+            )
+            action.save()
+
             messages.add_message(request, messages.INFO, "You successfully edited the profile")
             return redirect('users:profile', user.username)
         except User.DoesNotExist:
