@@ -47,6 +47,7 @@ def edit_profile(request, username):
             user.password = password
             if request.POST.get('role'):
                 detail.role = request.POST.get('role')
+                request.session['role'] = user.detail.role
             detail.sex = sex
             detail.save()
             user.save()

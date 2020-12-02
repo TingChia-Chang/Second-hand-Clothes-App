@@ -169,11 +169,24 @@ def clothes_add_comment(request):
                 url = reverse('users:profile', args=[request.session.get("username")])
                 time = naturaltime(cm.created_time)
 
-                return JsonResponse({'success': 'success', 'comment': clothes_comment, 'url': url, 'username': request.session.get("username"), 'time':time}, status=200)
+                return JsonResponse({'success': 'success', 'comment': clothes_comment, 'url': url, 'username': request.session.get("username"), 'time':time, 'id': cm.id}, status=200)
             except ClothesList.DoesNotExist:
                 return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
         else:
             return JsonResponse({'error': 'No comment'}, status=200)    
+    else:
+        return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
+
+def clothes_delete_comment(request):
+    is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+    if is_ajax and request.method == "POST":
+        comment_id = request.POST.get('comment_id')
+        comment = Comment.objects.get(pk=comment_id)
+        try:
+            comment.delete()
+            return JsonResponse({'success': 'success', 'id': comment_id}, status=200)
+        except Comment.DoesNotExist:
+            return JsonResponse({'error': 'No clothes found with that ID'}, status=200)
     else:
         return JsonResponse({'error': 'Invalid Ajax request'}, status=400)
 

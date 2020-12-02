@@ -7,6 +7,7 @@ urlpatterns = [
     path('list/', views.clothes_list, name="clothes_list"),
     path('list/sort_by_price', views.clothes_sort, name="clothes_sort"),
     path('list/add_comment', views.clothes_add_comment, name="clothes_add_comment"),
+    path('list/delete_comment', views.clothes_delete_comment, name="clothes_delete_comment"),
     path('list/<int:item_id>', views.clothes_detail, name="clothes_detail"),
     path('list/<int:item_id>/edit', views.clothes_edit, name="clothes_edit"),
     path('list/<int:item_id>/delete', views.clothes_delete, name="clothes_delete"),

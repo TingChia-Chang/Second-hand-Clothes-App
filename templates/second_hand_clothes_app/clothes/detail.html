@@ -36,13 +36,32 @@
 
 <div id="comment-box">
     <h3>Comments About the Seller</h3>
-    <div id="comment-content">
+    <div id="comment-content" data-ajax-url="{% url 'second_hand_clothes_app:clothes_delete_comment' %}">
         
         {% if comments %}
         {% for comment in comments %}
         <div class="show-comments">
+            
+            {% if request.session.role == "regular" %}
+            
+            {% if comment.username == request.session.username %}
             <p><a href="{% url 'users:profile' comment.username %}">{{comment.username}}</a>: {{comment.comment}}</p>
             <p>{{comment.created_time | naturaltime}}</p>
+            <button id="comment-delete" comment-id="{{comment.id}}" data-ajax-url="{% url 'second_hand_clothes_app:clothes_delete_comment' %}">Delete</button>
+            {% else %}
+            <p><a href="{% url 'users:profile' comment.username %}">{{comment.username}}</a>: {{comment.comment}}</p>
+            <p>{{comment.created_time | naturaltime}}</p>
+            {% endif %}
+            
+            {% endif %}
+
+            
+            {% if request.session.role == "admin" %}
+            <p><a href="{% url 'users:profile' comment.username %}">{{comment.username}}</a>: {{comment.comment}}</p>
+            <p>{{comment.created_time | naturaltime}}</p>
+            <button id="comment-delete" comment-id="{{comment.id}}" data-ajax-url="{% url 'second_hand_clothes_app:clothes_delete_comment' %}">Delete</button>
+            {% endif %}
+
         </div>
         {% endfor %}
 

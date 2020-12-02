@@ -5,6 +5,7 @@ $(document).ready(function(){
     addToCart();
     // showComment();
     addComment();
+    deleteComment();
 })
 
 function checkQueryString(){
@@ -269,6 +270,52 @@ function addToCart(){
     
 // }
 
+function deleteComment(){
+    $('div').on('click', '#comment-delete', function(e){
+        console.log('click')
+        var comment_id = $(this).attr('comment-id');
+        var comment_url = $("#comment-content").attr('data-ajax-url');
+        // var clothes_comment = $('#comment-input').val();
+        $.ajax({
+ 
+            // The URL for the request
+            url: comment_url,
+         
+            // The data to send (will be converted to a query string)
+            data: {
+                comment_id: comment_id,
+                // clothes_comment : clothes_comment
+            },
+         
+            // Whether this is a POST or GET request
+            type: "POST",
+         
+            // The type of data we expect back
+            dataType : "json",
+            headers : {'X-CSRFToken': csrftoken},
+            context: this
+        })
+          // Code to run if the request succeeds (is done);
+          // The response is passed to the function
+          .done(function( json ) {
+            $(this).parent().remove()
+          })
+          // Code to run if the request fails; the raw request and
+          // status codes are passed to the function
+          .fail(function( xhr, status, errorThrown ) {
+            // alert( "Sorry, there was a problem!" );
+            console.log( "Error: " + errorThrown );
+            // console.log( "Status: " + status );
+            // console.dir( xhr );
+          })
+          // Code to run regardless of success or failure;
+          .always(function( xhr, status ) {
+            // alert( "The request is complete!" );
+          });
+    })
+    
+}
+
 function addComment(){
     $('#comment-button').click(function(e){
         console.log('click')
@@ -300,7 +347,7 @@ function addComment(){
             // alert("request received successfully");
             // console.log(json.comment)
             if(!json.error){
-                $("#comment-content").prepend('<div class="show-comment"><p><a href="'+json.url+'">'+json.username+'</a> : '+json.comment+'</p><p>'+json.time+'</p></div>')
+                $("#comment-content").prepend('<div class="show-comments"><p><a href="'+json.url+'">'+json.username+'</a> : '+json.comment+'</p><p>'+json.time+'</p><button id="comment-delete" comment-id="'+json.id+'">Delete</button></div>')
                 $(".no-comment").remove()
             }
           })
