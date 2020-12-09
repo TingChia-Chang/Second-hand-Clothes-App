@@ -24,6 +24,10 @@ def register(request):
         detail = Detail.objects.get(user_id=user.id)
         detail.sex = sex
         detail.save()
+
+        request.session['username'] = user.username
+        request.session['role'] = user.detail.role
+        
         messages.add_message(request, messages.SUCCESS, "You successfully registerd with the username: %s" % user.username)
 
         return redirect('second_hand_clothes_app:clothes_index')
